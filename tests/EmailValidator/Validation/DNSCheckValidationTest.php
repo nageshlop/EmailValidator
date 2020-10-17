@@ -28,7 +28,7 @@ class DNSCheckValidationTest extends TestCase
             ['"Fred\ Bloggs"@ietf.org'],
             ['"Joe.\\Blow"@ietf.org'],
 
-            // unicide
+            // unicode
             ['ñandu.cl'],
         ];
     }
@@ -81,6 +81,9 @@ class DNSCheckValidationTest extends TestCase
         $this->assertEquals($expectedError, $validation->getError());
     }
 
+    /**
+     * Empty MX records
+     */
     public function testDomainAcceptsNoMailError()
     {
         $validation = new DNSCheckValidation();
@@ -90,12 +93,13 @@ class DNSCheckValidationTest extends TestCase
         $this->assertFalse($isValidResult);
     }
 
-    public function testDNSWarnings()
+    public function testMissingMXisInvalidEmail()
     {
-        $this->markTestSkipped('Need to found a domain with AAAA redords and no MX that fails later in the validations');
+        //$this->markTestSkipped('Need to found a domain with A redords and no MX that fails later in the validations');
         $validation = new DNSCheckValidation();
         $expectedWarnings = [NoDNSMXRecord::CODE => new NoDNSMXRecord()];
-        $validation->isValid("example@invalid.example.com", new EmailLexer());
+        $result = $validation->isValid("example@icluod.com", new EmailLexer());
+        $this->assertFalse($result);
         $this->assertEquals($expectedWarnings, $validation->getWarnings());
     }
 
@@ -103,7 +107,8 @@ class DNSCheckValidationTest extends TestCase
     {
         $validation = new DNSCheckValidation();
         $expectedError = new InvalidEmail(new NoDNSRecord(), '');
-        $validation->isValid("example@invalid.example.com", new EmailLexer());
+        $result = $validation->isValid("example@invalid.example.com", new EmailLexer());
+        $this->assertFalse($result);
         $this->assertEquals($expectedError, $validation->getError());
     }
 }
