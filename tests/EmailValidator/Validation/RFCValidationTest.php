@@ -195,6 +195,7 @@ class RFCValidationTest extends TestCase
             ['test@example.com []'],
             ['test@example.com. []'],
             ['test@test. example.com'],
+            ["test@example.com'"],
         ];
     }
 

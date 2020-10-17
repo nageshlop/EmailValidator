@@ -13,6 +13,7 @@ class EmailLexer extends AbstractLexer
     const S_BACKSLASH        = 92;
     const S_DOT              = 46;
     const S_DQUOTE           = 34;
+    const S_SQUOTE           = 39;
     const S_OPENPARENTHESIS  = 49;
     const S_CLOSEPARENTHESIS = 261;
     const S_OPENBRACKET      = 262;
@@ -59,6 +60,7 @@ class EmailLexer extends AbstractLexer
         ','    => self::S_COMMA,
         '.'    => self::S_DOT,
         '"'    => self::S_DQUOTE,
+        "'"    => self::S_SQUOTE,
         '-'    => self::S_HYPHEN,
         '::'   => self::S_DOUBLECOLON,
         ' '    => self::S_SP,
